@@ -1,0 +1,41 @@
+---
+Metadata:
+  AWSToolsMetrics:
+    IaC_Generator: "arn:aws:cloudformation:us-east-1:905731560834:generatedTemplate/8f789f3e-f4fd-4fc1-8500-c6076cf25292"
+Resources:
+  S3BucketPwtmyapp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: "Retain"
+    Properties:
+      WebsiteConfiguration:
+        IndexDocument: "index.html"
+      PublicAccessBlockConfiguration:
+        RestrictPublicBuckets: false
+        IgnorePublicAcls: false
+        BlockPublicPolicy: false
+        BlockPublicAcls: false
+      BucketName: "pwt-my-app"
+      OwnershipControls:
+        Rules:
+        - ObjectOwnership: "BucketOwnerEnforced"
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - BucketKeyEnabled: true
+          ServerSideEncryptionByDefault:
+            SSEAlgorithm: "AES256"
+  S3BucketPolicyPwtmyapp:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::S3::BucketPolicy"
+    DeletionPolicy: "Retain"
+    Properties:
+      Bucket:
+        Ref: "S3BucketPwtmyapp"
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Resource: "arn:aws:s3:::pwt-my-app/*"
+          Action: "s3:GetObject"
+          Effect: "Allow"
+          Principal: "*"
+          Sid: "PublicReadGetObject"
