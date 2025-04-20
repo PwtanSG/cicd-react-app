@@ -17,5 +17,10 @@ pipeline {
                 sh "npm run build"
             }
         }
+        stage('Deploy') {
+            steps{
+                sh "aws s3 sync build/ s3://pwt-my-app"
+            }
+        }
     }
 }
