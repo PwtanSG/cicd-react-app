@@ -14,7 +14,7 @@ Jenkins server will be host on AWS EC2 Ubuntu 24.04.
 AWS EC2 is used to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the aws folder. Allow traffice from SSH port 22 and Jenkins server port 8080.
 
 ### Installations
-Run aws/script.sh \ 
+Run aws/script.sh <br>
 Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm , AWS CLI on EC2.
 - Jenkins requires Java.
 - nodes/npm is for dependencies installation.
