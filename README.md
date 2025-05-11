@@ -5,20 +5,24 @@ A simple CICD pipeline to deploy a Simple React frontend app to AWS S3. Jenkins 
 This simple frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Static web hosting on AWS S3 bucket
-AWS S3 resource is created using the cloudformation temple file in the aws folder. The URL for static hosting website is shown in S3 bucket's properties tab under Static website hosting->bucket website endpoint
+The React Frontend App will be hosted on S3 static website hosting. Created AWS S3 resource using the cloudformation temple file in the aws folder. The URL for static hosting website is shown in S3 bucket's properties tab under Static website hosting->bucket website endpoint.
 
 ## Jenkins server on AWS EC2
-Jenkins server will be host on AWS EC2.
+Jenkins server will be host on AWS EC2 Ubuntu 24.04.
 
 ### AWS EC2
-AWS EC2 is use to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the aws folder.
+AWS EC2 is used to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the aws folder. Allow traffice from SSH port 22 and Jenkins server port 8080.
 
-### Running script.sh
-Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, AWS CLI, nodes, npm on EC2.
+### Installations
+Run aws/script.sh \ 
+Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm , AWS CLI on EC2.
+- Jenkins requires Java.
+- nodes/npm is for dependencies installation.
+- AWS CLI is for sync of app build to AWS S3 bucket. 
 
 ### Setup Jenkins server
 - Default Jenkins url will be EC2 http://ec2publicIpAddress:8080 
-- Login with admin password and complete the first time installation.
+- Login with admin credential and complete the first time installation.
 - Create a new item, pipeline, Triggers - GitHub hook trigger for GITScm polling 
 - Pipeline script - reference Jenkinsfile 
     1. code checkout
@@ -42,3 +46,4 @@ Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, AWS CLI, no
 ## Usage
 - Update code and push to Github repo.
 - Jenkins will be trigger to deploy new frontend build to S3 bucket
+- Access the URL of the S3 bucket static hosting website for the new build
