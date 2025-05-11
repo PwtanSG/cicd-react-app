@@ -11,20 +11,34 @@ AWS S3 resource is created using the cloudformation temple file in the aws folde
 Jenkins server will be host on AWS EC2.
 
 ### AWS EC2
-AWS EC2 is use to host the Jenkins server. Create AWS resource using the cloudformation template in the aws folder.
+AWS EC2 is use to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the aws folder.
 
 ### Running script.sh
 Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, AWS CLI, nodes, npm on EC2.
 
-### Login and setup Jenkins server
-- Default Jenkins url will be EC2 http://ec2publicIpAddress:8080 \
-- login with admin password and complete the first time installation.
-- Create a new item, pipeline, Triggers - GitHub hook trigger for GITScm polling \
-- reference Jenkins file for pipeline script (code checkout, install dependencies, build and deploy to S3) \
-- install Jenkins plugin "github integration" \
+### Setup Jenkins server
+- Default Jenkins url will be EC2 http://ec2publicIpAddress:8080 
+- Login with admin password and complete the first time installation.
+- Create a new item, pipeline, Triggers - GitHub hook trigger for GITScm polling 
+- Pipeline script - reference Jenkinsfile 
+    1. code checkout
+    2. install dependencies 
+    3. build and 
+    4. deploy to S3 
+- Install Jenkins plugin "github integration" 
 
-## Github webhook
-- Login your github account \
-- goto code repo -> setting \
-- Webhooks Add web Payload URL -> http://ec2publicIpAddress:8080/github-webhook/ \
-- Webhooks Content type set to Application/json \
+## Setup Github webhook
+- Login your github account 
+- goto code repo -> setting 
+- Webhooks Add web Payload URL -> http://ec2publicIpAddress:8080/github-webhook/ 
+- Webhooks Content type set to Application/json 
+
+## Setup AWS CLI 
+- IAM role must be created for this use
+- Configure aws CLI
+- Create a .aws folder in /var/lib/jenkins
+- Add 2 files, configure and credentials in .aws folder
+
+## Usage
+- Update code and push to Github repo.
+- Jenkins will be trigger to deploy new frontend build to S3 bucket
