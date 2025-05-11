@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# This script install Java, Jenkins, Git, AWS CLI
+# - To download file from Git repo
+# wget https://raw.github.com/PwtanSG/cicd-react-app/master/script.sh
+# - To Make the script executable
+# chmod +x script.sh
+# - To run the script
+# ./script.sh
+# - To view log file
+# cat script.log
+
 date >> script.log
 hostnamectl >> script.log
 sudo apt update -y
