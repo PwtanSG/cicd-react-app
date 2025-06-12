@@ -30,7 +30,7 @@ Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm 
     2. install dependencies 
     3. build and 
     4. deploy to S3 
-- Install Jenkins plugin "github integration" 
+- Install Jenkins plugin "github integration", Dashboard - Manage Jenkins - pluggins - available pluggins
 
 ## Setup Github webhook
 - Login your github account 
