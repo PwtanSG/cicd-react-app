@@ -42,8 +42,12 @@ Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm 
 - IAM role must be created for this use
 - Configure aws CLI
 - Create a .aws folder in /var/lib/jenkins
-- Add 2 files, configure and credentials in .aws folder
-
+    - cd /var/lib/jenkins
+    - sudo mkdir .aws
+    - ls -a
+- Add 2 files, config and credentials in .aws folder
+    - sudo vim confifg
+    - sudo vim credentials
 ## Usage
 - Update code and push to Github repo.
 - Jenkins will be trigger to deploy new frontend build to S3 bucket
