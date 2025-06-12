@@ -1,11 +1,25 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: A sample CloudFormation template with YAML comments.
+Description: AWS EC2 is used to host the Jenkins server. Create AWS EC2 resource using the cloudformation. Allow traffic from SSH port 22 and Jenkins server port 8080.
 
-# AWS cloudformation 
+# AWS console - cloudformation 
 # - create stack
 # - choose an existing template
-# - upload a template file - next
+# - upload a template file - select file - next
 # - enter stack name, next next submit
+
+# AWS CLI to execute cloudformation
+# aws cloudformation create-stack
+# --stack-name CreateEc2ForMyApp 
+# --template-body file://infrastructure/CF-ec2-basic-template.yaml
+# --region us-east-1 
+# --profile admin
+
+Outputs:
+  Ec2Created:
+    Description: Public IP of ec2 created
+    Value: !GetAtt # 2 Params
+      - MyInstance
+      - PublicIp
 
 Resources:
   MyInstance:
@@ -17,12 +31,13 @@ Resources:
       AvailabilityZone: us-east-1a
       ImageId: ami-084568db4383264d4 # Ubuntu Server 24.04 LTS (HVM),EBS General Purpose (SSD) Volume Type
       InstanceType: t2.medium # Due to build is done on server, T2 micro cannot handle the load 
+      # InstanceType: t2.small # Due to build is done on server, T2 micro cannot handle the load 
       KeyName: jenkins-server
       SecurityGroupIds:
         - !Ref ServerSecurityGroup
-        - sg-0c97817c6fc0f748b
+        - sg-0c97817c6fc0f748b  # Using default security
 
-  # our second EC2 security group
+  # My EC2 security group
   ServerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:

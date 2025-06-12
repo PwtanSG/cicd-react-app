@@ -1,20 +1,20 @@
 # CICD project
-A simple CICD pipeline to deploy a Simple React frontend app to AWS S3. Jenkins server is hosted on AWS EC2. A Jenkins pipeline job is created to checkout the code from Git Repo, installing dependencies and build and deploy the new build to S3 bucket using AWS CLI. This pipeline will be trigger by code push to Github.
+A simple CICD pipeline to deploy a Simple React frontend app to AWS S3 using Jenkins. Jenkins server is hosted on AWS EC2. A Jenkins pipeline job is created to checkout the code from Git Repo, installing dependencies and build and deploy the new build to S3 bucket using AWS CLI. This pipeline will be trigger by code push to Github.
 
 ## React Frontend App
 This simple frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Static web hosting on AWS S3 bucket
-The React Frontend App will be hosted on S3 static website hosting. Created AWS S3 resource using the cloudformation temple file in the aws folder. The URL for static hosting website is shown in S3 bucket's properties tab under Static website hosting->bucket website endpoint.
+The React Frontend App will be hosted on S3 static website hosting. Created AWS S3 resource using the cloudformation temple file in the infrastucture folder. The URL for static hosting website is shown in S3 bucket's properties tab under Static website hosting->bucket website endpoint.
 
 ## Jenkins server on AWS EC2
-Jenkins server will be host on AWS EC2 Ubuntu 24.04.
+Jenkins server will be host on AWS EC2 Ubuntu latest version 24.04.
 
 ### AWS EC2
-AWS EC2 is used to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the aws folder. Allow traffice from SSH port 22 and Jenkins server port 8080.
+AWS EC2 is used to host the Jenkins server. Create AWS EC2 resource using the cloudformation template in the infrastucture folder. Allow traffic from SSH port 22 and Jenkins server port 8080.
 
 ### Installations
-Run aws/script.sh <br>
+Run installation_script.sh <br>
 Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm , AWS CLI on EC2.
 - Jenkins requires Java.
 - nodes/npm is for dependencies installation.
@@ -22,6 +22,7 @@ Access EC2 via SSH, execute script.sh to install Java, Jenkins, Git, nodes, npm 
 
 ### Setup Jenkins server
 - Default Jenkins url will be EC2 http://ec2publicIpAddress:8080 
+- Initial pw - sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 - Login with admin credential and complete the first time installation.
 - Create a new item, pipeline, Triggers - GitHub hook trigger for GITScm polling 
 - Pipeline script - reference Jenkinsfile 

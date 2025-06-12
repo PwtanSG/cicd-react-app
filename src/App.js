@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          create-react-app is already dead for so long already!
+          create-react-app is already dead long ago!
         </a>
       </header>
     </div>

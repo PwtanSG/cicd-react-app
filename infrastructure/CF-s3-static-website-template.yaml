@@ -1,9 +1,29 @@
----
-Metadata:
-  AWSToolsMetrics:
-    IaC_Generator: "arn:aws:cloudformation:us-east-1:905731560834:generatedTemplate/8f789f3e-f4fd-4fc1-8500-c6076cf25292"
+AWSTemplateFormatVersion: 2010-09-09
+Description: AWS S3 bucket to host static website.
+
+# Usage - AWS CLI :  
+# aws cloudformation create-stack
+# --stack-name CreateS3BucketForMyApp
+# --template-body file://infrastructure/CF-s3-static-website-template.yaml
+# --parameters ParameterKey=S3BucketNameForApp,ParameterValue=pwt-my-app
+# --region us-east-1 
+# --profile admin
+
+Parameters:
+  S3BucketNameForApp:
+    Type: String
+    Description: Name of S3 bucket to store static sites files
+    # Default: pwt-my-app
+
+Outputs:
+  S3Bucket:
+    Description: URL for website hosted on S3
+    Value: !GetAtt
+      - S3BucketForMyapp
+      - WebsiteURL
+
 Resources:
-  S3BucketPwtmyapp:
+  S3BucketForMyapp:
     UpdateReplacePolicy: "Retain"
     Type: "AWS::S3::Bucket"
     DeletionPolicy: "Retain"
@@ -15,7 +35,7 @@ Resources:
         IgnorePublicAcls: false
         BlockPublicPolicy: false
         BlockPublicAcls: false
-      BucketName: "pwt-my-app"
+      BucketName: !Ref S3BucketNameForApp
       OwnershipControls:
         Rules:
         - ObjectOwnership: "BucketOwnerEnforced"
@@ -24,17 +44,18 @@ Resources:
         - BucketKeyEnabled: true
           ServerSideEncryptionByDefault:
             SSEAlgorithm: "AES256"
-  S3BucketPolicyPwtmyapp:
-    UpdateReplacePolicy: "Retain"
+  S3BucketPolicyForMyApp:
     Type: "AWS::S3::BucketPolicy"
+    # DependsOn:
+    #   -   S3BucketForMyapp
     DeletionPolicy: "Retain"
     Properties:
       Bucket:
-        Ref: "S3BucketPwtmyapp"
+        Ref: "S3BucketForMyapp" # bucketname
       PolicyDocument:
         Version: "2012-10-17"
         Statement:
-        - Resource: "arn:aws:s3:::pwt-my-app/*"
+        - Resource: !Sub "arn:aws:s3:::${S3BucketForMyapp}/*"
           Action: "s3:GetObject"
           Effect: "Allow"
           Principal: "*"
