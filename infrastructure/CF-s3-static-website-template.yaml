@@ -24,7 +24,7 @@ Outputs:
 
 Resources:
   S3BucketForMyapp:
-    UpdateReplacePolicy: "Retain"
+    # UpdateReplacePolicy: "Retain"
     Type: "AWS::S3::Bucket"
     DeletionPolicy: "Retain"
     Properties:
